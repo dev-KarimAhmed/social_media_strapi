@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:social_media_app/core/utils/app_router.dart';
 import 'package:social_media_app/core/utils/services_locator.dart';
 import 'package:social_media_app/features/authentication/data/repos/auth_repo_impl.dart';
 import 'package:social_media_app/features/authentication/presentation/view_model/auth_cubit/authentcation_cubit.dart';
 import 'package:social_media_app/features/authentication/presentation/view_model/auth_cubit/authentcation_state.dart';
 import 'package:social_media_app/features/authentication/presentation/views/widgets/custom_text_button.dart';
+import 'package:social_media_app/features/home/presentation/views/home_view.dart';
 
 import '../../../../core/custom_text_field.dart';
 
@@ -21,9 +23,13 @@ class LoginView extends StatelessWidget {
     return BlocProvider(
       create: (context) => AuthentcationCubit(getIt.get<AuthRepoImpl>()),
       child: BlocConsumer<AuthentcationCubit, AuthentcationState>(
-        listener: (context, state) {
+        listener: (context, state) async{
           if (state is AuthentcationSuccess) {
             print('======================> ${state.authModel.user?.username}');
+               final SharedPreferences prefs = await SharedPreferences.getInstance();
+          
+          prefs.setBool('isSignedUp', true).then((value) => Navigator.push(
+              context, MaterialPageRoute(builder: (context) => const HomeView())));
           } else if (state is AuthentcationError) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
