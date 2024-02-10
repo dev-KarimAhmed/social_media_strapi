@@ -22,7 +22,15 @@ class LoginView extends StatelessWidget {
       create: (context) => AuthentcationCubit(getIt.get<AuthRepoImpl>()),
       child: BlocConsumer<AuthentcationCubit, AuthentcationState>(
         listener: (context, state) {
-          // TODO: implement listener
+          if (state is AuthentcationSuccess) {
+            print('======================> ${state.authModel.user?.username}');
+          } else if (state is AuthentcationError) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.message),
+              ),
+            );
+          }
         },
         builder: (context, state) {
           var cubit = AuthentcationCubit.get(context);
@@ -86,7 +94,12 @@ class LoginView extends StatelessWidget {
                       ),
                       GestureDetector(
                         onTap: () {
-                          if (formKey.currentState!.validate()) {}
+                          if (formKey.currentState!.validate()) {
+                            cubit.login(
+                                identifier: email.text,
+                                password: password.text,
+                                );
+                          }
                         },
                         child: Container(
                           padding: const EdgeInsets.all(16),

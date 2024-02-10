@@ -22,8 +22,7 @@ class RegisterView extends StatelessWidget {
       child: BlocConsumer<AuthentcationCubit, AuthentcationState>(
         listener: (context, state) {
           if (state is AuthentcationSuccess) {
-            print(
-                '======================> ${state.registerModel.user?.username}');
+            print('======================> ${state.authModel.user?.username}');
           } else if (state is AuthentcationError) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(

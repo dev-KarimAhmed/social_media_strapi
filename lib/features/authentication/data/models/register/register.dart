@@ -2,13 +2,13 @@ import 'package:equatable/equatable.dart';
 
 import 'user.dart';
 
-class RegisterModel extends Equatable {
+class AuthModel extends Equatable {
   final String? jwt;
   final User? user;
 
-  const RegisterModel({this.jwt, this.user});
+  const AuthModel({this.jwt, this.user});
 
-  factory RegisterModel.fromJson(Map<String, dynamic> json) => RegisterModel(
+  factory AuthModel.fromJson(Map<String, dynamic> json) => AuthModel(
         jwt: json['jwt'] as String?,
         user: json['user'] == null ? null : User.fromJson(json['user']),
       );

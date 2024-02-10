@@ -11,7 +11,7 @@ class AuthRepoImpl implements AuthRepo {
   AuthRepoImpl(this.apiServices);
 
   @override
-  Future<Either<Failure, RegisterModel>> register({
+  Future<Either<Failure, AuthModel>> register({
     required String username,
     required String email,
     required String password,
@@ -26,14 +26,37 @@ class AuthRepoImpl implements AuthRepo {
         },
       );
 
-      final RegisterModel registerModel =
-          RegisterModel.fromJson(data.data as Map<String, dynamic>);
-      
-      // Print statements for debugging
-      print(data.data);
-      print(data.extra);
+      final AuthModel authModel =
+          AuthModel.fromJson(data.data as Map<String, dynamic>);
 
-      return right(registerModel);
+
+
+      return right(authModel);
+    } catch (e) {
+      if (e is DioException) {
+        return left(ServerError.fromDioError(e));
+      }
+      return left(ServerError(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, AuthModel>> login(
+      {required String identifier, required String password}) async {
+    try {
+      final Response<dynamic> data = await apiServices.register(
+        'auth/local',
+        {
+          'identifier': identifier,
+          'password': password,
+        },
+      );
+
+      final AuthModel authModel =
+          AuthModel.fromJson(data.data as Map<String, dynamic>);
+
+ 
+      return right(authModel);
     } catch (e) {
       if (e is DioException) {
         return left(ServerError.fromDioError(e));

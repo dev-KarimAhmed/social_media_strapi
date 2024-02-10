@@ -18,7 +18,23 @@ class ApiServices {
       return response;
     } catch (e) {
       // Handle exceptions or errors here, if necessary
-      throw e;
+      rethrow;
     }
   }
+  Future<Response> login(String endPoint, Map<String, dynamic> data) async {
+    try {
+      final Response<dynamic> response = await dio.post(
+        _baseUrl + endPoint,
+        data: data,
+      );
+
+      // You might want to handle errors or status codes here if needed
+
+      return response;
+    } catch (e) {
+      // Handle exceptions or errors here, if necessary
+      rethrow;
+    }
+  }
+
 }

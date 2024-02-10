@@ -28,12 +28,29 @@ class AuthentcationCubit extends Cubit<AuthentcationState> {
         password: password,
       );
 
-      print(result);
+      result.fold(
+        (failure) => emit(AuthentcationError(message: failure.errMessage)),
+        (authModel) => emit(AuthentcationSuccess(authModel: authModel)),
+      );
+    } catch (e) {
+      // Handle exceptions here if needed
+      print(e);
+    }
+  }
+
+  Future<void> login({
+    required String identifier,
+    required String password,
+  }) async {
+    try {
+      final result = await authRepo.login(
+        identifier: identifier,
+        password: password,
+      );
 
       result.fold(
         (failure) => emit(AuthentcationError(message: failure.errMessage)),
-        (registerModel) =>
-            emit(AuthentcationSuccess(registerModel: registerModel)),
+        (authModel) => emit(AuthentcationSuccess(authModel: authModel)),
       );
     } catch (e) {
       // Handle exceptions here if needed
