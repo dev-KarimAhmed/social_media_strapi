@@ -5,12 +5,13 @@ import 'package:social_media_app/constants.dart';
 import 'package:social_media_app/core/utils/app_router.dart';
 import 'package:social_media_app/core/utils/bloc_observer.dart';
 import 'package:social_media_app/core/utils/services_locator.dart';
-import 'package:social_media_app/features/home/presentation/view_model/home_cubit/home_cubit.dart';
+import 'package:social_media_app/features/authentication/data/repos/auth_repo_impl.dart';
+import 'package:social_media_app/features/authentication/presentation/view_model/auth_cubit/authentcation_cubit.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  isSignedUp = prefs.getBool('isSignedUp');
+  // isSignedUp = prefs.getBool('isSignedUp');
   Bloc.observer = SimpleBlocObserver();
   setupServiceLocator();
   runApp(const SocialMediaApp());
@@ -22,7 +23,7 @@ class SocialMediaApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AppCubit(),
+      create: (context) => AuthentcationCubit(getIt.get<AuthRepoImpl>()),
       child: MaterialApp.router(
         routerConfig: AppRouter.router,
         debugShowCheckedModeBanner: false,

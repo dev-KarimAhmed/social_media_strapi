@@ -1,2 +1,2 @@
 const String kAppTitle = 'Social Media Strapi';
-bool? isSignedUp;
+// bool? isSignedUp;

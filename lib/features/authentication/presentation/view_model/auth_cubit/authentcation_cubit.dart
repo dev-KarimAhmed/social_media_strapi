@@ -42,6 +42,7 @@ class AuthentcationCubit extends Cubit<AuthentcationState> {
     required String identifier,
     required String password,
   }) async {
+    emit(AuthentcationLoading());
     try {
       final result = await authRepo.login(
         identifier: identifier,

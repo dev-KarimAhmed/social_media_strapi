@@ -12,13 +12,8 @@ abstract class AppRouter {
     routes: [
       GoRoute(
         path: '/',
-        builder: (context, state) {
-          if (isSignedUp == false) {
-            return LoginView();
-          } else {
-            return const HomeView();
-          }
-        },
+        builder: (context, state) => LoginView(),
+     
       ),
       GoRoute(
         path: kHomeView,

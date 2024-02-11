@@ -19,12 +19,7 @@ class AppCubit extends Cubit<SocialMediaUiState> {
   static AppCubit get(context) => BlocProvider.of(context);
 
 
-  // Function to hide password in the textField
-  bool isHidden = true;
-  void hidePassword() {
-    isHidden = !isHidden;
-    emit(PasswordHideen());
-  }
+ 
 
   //Function to register the user for the first time when use application
 
