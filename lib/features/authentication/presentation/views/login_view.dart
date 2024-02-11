@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:social_media_app/constants.dart';
 import 'package:social_media_app/core/utils/app_router.dart';
 import 'package:social_media_app/features/authentication/presentation/view_model/auth_cubit/authentcation_cubit.dart';
 import 'package:social_media_app/features/authentication/presentation/view_model/auth_cubit/authentcation_state.dart';
@@ -23,9 +24,13 @@ class LoginView extends StatelessWidget {
         if (state is AuthentcationSuccess) {
           print('======================> ${state.authModel.user?.username}');
           final SharedPreferences prefs = await SharedPreferences.getInstance();
-          GoRouter.of(context).pushReplacement(AppRouter.kHomeView);
-          // prefs.setBool('isSignedUp', true).then((value) => Navigator.push(
-          //     context, MaterialPageRoute(builder: (context) => const HomeView())));
+          prefs
+              .setString('token', state.authModel.jwt ?? '')
+              .then((value) => Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => HomeView()),
+                    (route) => false,
+                  ));
+          print('======================> $token');
         } else if (state is AuthentcationError) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -40,7 +45,7 @@ class LoginView extends StatelessWidget {
         return Scaffold(
           body: SafeArea(
               child: state is AuthentcationLoading
-                  ?const Center(
+                  ? const Center(
                       child: CircularProgressIndicator(),
                     )
                   : Padding(
@@ -137,8 +142,8 @@ class LoginView extends StatelessWidget {
                                   ),
                                   CustomTextButton(
                                     onTap: () {
-                                      GoRouter.of(context)
-                                          .push(AppRouter.kRegisterView);
+                                      // GoRouter.of(context)
+                                      //     .push(AppRouter.kRegisterView);
                                     },
                                     text: 'Register',
                                   ),

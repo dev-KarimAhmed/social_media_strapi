@@ -1,2 +1,3 @@
 const String kAppTitle = 'Social Media Strapi';
-// bool? isSignedUp;
+String token = '';
+String jwt = '';

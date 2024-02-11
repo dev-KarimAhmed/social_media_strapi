@@ -24,7 +24,12 @@ class RegisterView extends StatelessWidget {
         if (state is AuthentcationSuccess) {
           print('======================> ${state.authModel.user?.username}');
           final SharedPreferences prefs = await SharedPreferences.getInstance();
-          GoRouter.of(context).pushReplacement(AppRouter.kHomeView);
+          // ignore: use_build_context_synchronously
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => const HomeView()),
+              (route) => false);
+          // GoRouter.of(context).pushReplacement(AppRouter.kHomeView);
           // prefs.setBool('isSignedUp', true).then((value) => Navigator.push(
           //     context, MaterialPageRoute(builder: (context) => const HomeView())));
         } else if (state is AuthentcationError) {

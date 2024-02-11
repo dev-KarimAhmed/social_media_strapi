@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:social_media_app/constants.dart';
 import 'package:social_media_app/features/home/presentation/view_model/home_cubit/home_cubit.dart';
 import 'package:social_media_app/features/home/presentation/view_model/home_cubit/home_state.dart';
+import 'package:social_media_app/startpoint.dart';
 
 class SettingsView extends StatelessWidget {
   const SettingsView({super.key});
@@ -9,8 +11,16 @@ class SettingsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit, SocialMediaUiState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state is SignedOutSuccess) {
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => const StartPoint()),
+              (route) => true);
+        }
+      },
       builder: (context, state) {
+        var cubit = AppCubit.get(context);
         return Scaffold(
           body: Padding(
             padding: const EdgeInsets.all(8),
@@ -134,7 +144,13 @@ class SettingsView extends StatelessWidget {
                       ),
                     ),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        cubit.signOut(token);
+                        // token = null;
+                        // print(token);
+                        // GoRouter.of(context)
+                        //     .pushReplacement(AppRouter.kLoginView);
+                      },
                       icon: const Icon(
                         Icons.edit,
                         color: Colors.blue,
