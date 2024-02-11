@@ -3,6 +3,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_media_app/features/authentication/data/repos/auth_repo.dart';
 import 'package:social_media_app/features/authentication/presentation/view_model/auth_cubit/authentcation_state.dart';
+import 'package:social_media_app/main.dart';
 
 class AuthentcationCubit extends Cubit<AuthentcationState> {
   AuthentcationCubit(this.authRepo) : super(AuthentcationInitial());
@@ -14,6 +15,20 @@ class AuthentcationCubit extends Cubit<AuthentcationState> {
   void hidePassword() {
     isHidden = !isHidden;
     emit(PasswordHideen());
+  }
+
+  Future saveToken(String token) async {
+   await prefs!.setString('token', token);
+    emit(TokenSavedSuccess());
+
+  }
+
+  String getToken()  {
+    return  prefs!.getString('token') ?? '';
+  }
+    Future signOut() async{
+   await prefs!.setString('token', '');
+    emit(SignedOutSuccess());
   }
 
   Future<void> register({

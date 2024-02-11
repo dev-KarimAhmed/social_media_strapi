@@ -108,4 +108,3 @@ class GetMessagesLoading extends SocialMediaUiState {}
 class PostDeletedLoading extends SocialMediaUiState {}
 class PostDeletedSuccess extends SocialMediaUiState {}
 class PostDeletedError extends SocialMediaUiState {}
-class SignedOutSuccess extends SocialMediaUiState {}

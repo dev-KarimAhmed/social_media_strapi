@@ -29,3 +29,7 @@ class LoginError extends AuthentcationState {
 }
 
 class LoginLoading extends AuthentcationState {}
+
+class TokenSavedSuccess extends AuthentcationState {}
+
+class SignedOutSuccess extends AuthentcationState {}

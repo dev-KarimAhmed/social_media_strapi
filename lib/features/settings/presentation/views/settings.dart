@@ -1,26 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:social_media_app/constants.dart';
-import 'package:social_media_app/features/home/presentation/view_model/home_cubit/home_cubit.dart';
-import 'package:social_media_app/features/home/presentation/view_model/home_cubit/home_state.dart';
-import 'package:social_media_app/startpoint.dart';
+import 'package:social_media_app/features/authentication/presentation/view_model/auth_cubit/authentcation_cubit.dart';
+import 'package:social_media_app/features/authentication/presentation/view_model/auth_cubit/authentcation_state.dart';
+import 'package:social_media_app/features/authentication/presentation/views/login_view.dart';
 
 class SettingsView extends StatelessWidget {
   const SettingsView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AppCubit, SocialMediaUiState>(
+    return BlocConsumer<AuthentcationCubit, AuthentcationState>(
       listener: (context, state) {
         if (state is SignedOutSuccess) {
           Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => const StartPoint()),
-              (route) => true);
+              MaterialPageRoute(builder: (context) => LoginView()),
+              (route) => false);
         }
       },
       builder: (context, state) {
-        var cubit = AppCubit.get(context);
+        var cubit = AuthentcationCubit.get(context);
         return Scaffold(
           body: Padding(
             padding: const EdgeInsets.all(8),
@@ -145,7 +144,7 @@ class SettingsView extends StatelessWidget {
                     ),
                     IconButton(
                       onPressed: () {
-                        cubit.signOut(token);
+                        cubit.signOut();
                         // token = null;
                         // print(token);
                         // GoRouter.of(context)

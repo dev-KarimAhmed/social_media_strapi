@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:social_media_app/core/utils/app_router.dart';
 import 'package:social_media_app/features/authentication/presentation/view_model/auth_cubit/authentcation_cubit.dart';
 import 'package:social_media_app/features/authentication/presentation/view_model/auth_cubit/authentcation_state.dart';
 import 'package:social_media_app/features/authentication/presentation/views/widgets/custom_text_button.dart';
@@ -21,17 +18,13 @@ class RegisterView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<AuthentcationCubit, AuthentcationState>(
       listener: (context, state) async {
+        AuthentcationCubit cubit = AuthentcationCubit.get(context);
         if (state is AuthentcationSuccess) {
           print('======================> ${state.authModel.user?.username}');
-          final SharedPreferences prefs = await SharedPreferences.getInstance();
-          // ignore: use_build_context_synchronously
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => const HomeView()),
-              (route) => false);
-          // GoRouter.of(context).pushReplacement(AppRouter.kHomeView);
-          // prefs.setBool('isSignedUp', true).then((value) => Navigator.push(
-          //     context, MaterialPageRoute(builder: (context) => const HomeView())));
+        cubit.saveToken(state.authModel.jwt ?? '').then((value) => Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) =>const HomeView()),
+                    (route) => false,
+                  ));
         } else if (state is AuthentcationError) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(

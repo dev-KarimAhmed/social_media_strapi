@@ -16,10 +16,7 @@ class AppCubit extends Cubit<SocialMediaUiState> {
   AppCubit() : super(SocialMediaUiInitial());
   static AppCubit get(context) => BlocProvider.of(context);
 
-  void signOut(String jwt) {
-    jwt = '';
-    emit(SignedOutSuccess());
-  }
+
 
   //Function to register the user for the first time when use application
 

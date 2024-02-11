@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:social_media_app/constants.dart';
-import 'package:social_media_app/core/utils/app_router.dart';
 import 'package:social_media_app/features/authentication/presentation/view_model/auth_cubit/authentcation_cubit.dart';
 import 'package:social_media_app/features/authentication/presentation/view_model/auth_cubit/authentcation_state.dart';
+import 'package:social_media_app/features/authentication/presentation/views/register_view.dart';
 import 'package:social_media_app/features/authentication/presentation/views/widgets/custom_text_button.dart';
 import 'package:social_media_app/features/home/presentation/views/home_view.dart';
 
@@ -21,13 +19,13 @@ class LoginView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<AuthentcationCubit, AuthentcationState>(
       listener: (context, state) async {
+        AuthentcationCubit cubit = AuthentcationCubit.get(context);
         if (state is AuthentcationSuccess) {
           print('======================> ${state.authModel.user?.username}');
-          final SharedPreferences prefs = await SharedPreferences.getInstance();
-          prefs
-              .setString('token', state.authModel.jwt ?? '')
+          cubit
+              .saveToken(state.authModel.jwt ?? '')
               .then((value) => Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(builder: (context) => HomeView()),
+                    MaterialPageRoute(builder: (context) => const HomeView()),
                     (route) => false,
                   ));
           print('======================> $token');
@@ -144,6 +142,10 @@ class LoginView extends StatelessWidget {
                                     onTap: () {
                                       // GoRouter.of(context)
                                       //     .push(AppRouter.kRegisterView);
+                                      Navigator.push(context,
+                                          MaterialPageRoute(builder: (context) {
+                                        return RegisterView();
+                                      }));
                                     },
                                     text: 'Register',
                                   ),

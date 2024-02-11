@@ -9,13 +9,16 @@ import 'package:social_media_app/features/authentication/presentation/view_model
 import 'package:social_media_app/features/authentication/presentation/views/login_view.dart';
 import 'package:social_media_app/features/home/presentation/views/home_view.dart';
 
+SharedPreferences? prefs;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final SharedPreferences prefs = await SharedPreferences.getInstance();
-  token = prefs.getString('token') ?? '';
+  prefs = await SharedPreferences.getInstance();
   Bloc.observer = SimpleBlocObserver();
   setupServiceLocator();
-  runApp(const SocialMediaApp());
+  runApp(BlocProvider(
+    create: (context) => AuthentcationCubit(getIt.get<AuthRepoImpl>()),
+    child: const SocialMediaApp(),
+  ));
 }
 
 class SocialMediaApp extends StatelessWidget {
@@ -23,16 +26,15 @@ class SocialMediaApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => AuthentcationCubit(getIt.get<AuthRepoImpl>()),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: kAppTitle,
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: token == '' ? LoginView() : const HomeView(),
+    AuthentcationCubit c = AuthentcationCubit.get(context);
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: kAppTitle,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
       ),
+      home: c.getToken() == '' ? LoginView() : const HomeView(),
     );
   }
 }
+     // create: (context) => AuthentcationCubit(getIt.get<AuthRepoImpl>()),
