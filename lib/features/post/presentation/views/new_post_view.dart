@@ -10,16 +10,15 @@ class NewPostScreen extends StatelessWidget {
   final TextEditingController postController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AppCubit, SocialMediaUiState>(
-      listener: (context, state) {
-      },
+    return BlocConsumer<HomeCubit, HomeStates>(
+      listener: (context, state) {},
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
             leading: IconButton(
               onPressed: () {
                 Navigator.pop(context);
-                AppCubit.get(context).removePostImage();
+                HomeCubit.get(context).removePostImage();
               },
               icon: const Icon(
                 Icons.arrow_back_ios_new,
@@ -33,9 +32,7 @@ class NewPostScreen extends StatelessWidget {
             actions: [
               CustomActionButton(
                 text: 'POST',
-                onTap: () {
-                 
-                },
+                onTap: () {},
               ),
             ],
           ),
@@ -44,12 +41,12 @@ class NewPostScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 children: [
-                  if (state is PostCreateLoading) ...[
+              
                     const LinearProgressIndicator(),
                     const SizedBox(
                       height: 10,
-                    )
-                  ],
+                    ),
+                
                   const Row(
                     children: [
                       CircleAvatar(
@@ -77,7 +74,7 @@ class NewPostScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  if (AppCubit.get(context).postImage != null) ...[
+                  if (HomeCubit.get(context).postImage != null) ...[
                     Stack(
                       alignment: Alignment.topRight,
                       children: [
@@ -87,8 +84,8 @@ class NewPostScreen extends StatelessWidget {
                           decoration: BoxDecoration(
                               image: DecorationImage(
                                 fit: BoxFit.cover,
-                                image:
-                                    FileImage(AppCubit.get(context).postImage!),
+                                image: FileImage(
+                                    HomeCubit.get(context).postImage!),
                               ),
                               borderRadius: BorderRadius.circular(8)),
                         ),
@@ -97,7 +94,7 @@ class NewPostScreen extends StatelessWidget {
                           child: CustomCircleAvatar(
                             icon: Icons.close,
                             onPressed: () {
-                              AppCubit.get(context).removePostImage();
+                              HomeCubit.get(context).removePostImage();
                             },
                           ),
                         )
@@ -112,7 +109,7 @@ class NewPostScreen extends StatelessWidget {
                       Expanded(
                         child: TextButton(
                           onPressed: () {
-                            AppCubit.get(context).pickedPostImageFromGallery();
+                            HomeCubit.get(context).pickedPostImageFromGallery();
                           },
                           child: const Row(
                             mainAxisAlignment: MainAxisAlignment.center,

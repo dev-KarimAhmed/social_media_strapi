@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:image_picker/image_picker.dart';
+import 'package:social_media_app/features/home/data/repos/home_repo.dart';
 import 'package:social_media_app/features/home/presentation/view_model/home_cubit/home_state.dart';
 
 import '../../../../chat/presentation/views/chat_view.dart';
@@ -12,17 +13,11 @@ import '../../../../post/presentation/views/new_post_view.dart';
 import '../../../../search/presentation/views/search.dart';
 import '../../../../settings/presentation/views/settings.dart';
 
-class AppCubit extends Cubit<SocialMediaUiState> {
-  AppCubit() : super(SocialMediaUiInitial());
-  static AppCubit get(context) => BlocProvider.of(context);
+class HomeCubit extends Cubit<HomeStates> {
+  HomeCubit(this.homeRepo) : super(HomeStatesIntial());
+  static HomeCubit get(context) => BlocProvider.of(context);
 
-
-
-  //Function to register the user for the first time when use application
-
-  //Function to Login in
-
-  //Function to create a user and / === intialize the model === /
+  final HomeRepo homeRepo;
 
   // variables for the navigationBar
   int currentIndex = 0;
@@ -75,18 +70,16 @@ class AppCubit extends Cubit<SocialMediaUiState> {
     emit(CoverImagePickedSuccess());
   }
 
-  // void updateUserImages(
-  //     {required String name, required String bio, required String phone}) {
-  //   emit(UpdateDataLoading());
-  //   if (profileImage != null) {
-  //     uploadProfileImage();
-  //   } else if (profileImage != null) {
-  //     uploadCoverImage();
-  //   } else if (profileImage != null && profileImage != null) {
-  //   } else {
-  //     updateUserData(name: name, bio: bio, phone: phone);
-  //   }
-  // }
+  Future<void> getPosts() async {
+    emit(GetPostsLoading());
+
+    var result = await homeRepo.getPosts();
+
+    result.fold(
+      (failure) => emit(GetPostesFailed(failure.errMessage)),
+      (posts) => emit(GetPostesSuccess(posts)),
+    );
+  }
 
   // Function to pick an image from your gallery for post (imagePicker package)
   File? postImage;

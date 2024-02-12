@@ -18,16 +18,15 @@ class AuthentcationCubit extends Cubit<AuthentcationState> {
   }
 
   Future saveToken(String token) async {
-   await prefs!.setString('token', token);
-    emit(TokenSavedSuccess());
-
+    await prefs!.setString('token', token);
   }
 
-  String getToken()  {
-    return  prefs!.getString('token') ?? '';
+  String getToken() {
+    return prefs!.getString('token') ?? '';
   }
-    Future signOut() async{
-   await prefs!.setString('token', '');
+
+  Future signOut() async {
+    await prefs!.setString('token', '');
     emit(SignedOutSuccess());
   }
 

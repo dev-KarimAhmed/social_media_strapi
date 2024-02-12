@@ -21,6 +21,7 @@ class ApiServices {
       rethrow;
     }
   }
+
   Future<Response> login(String endPoint, Map<String, dynamic> data) async {
     try {
       final Response<dynamic> response = await dio.post(
@@ -37,4 +38,8 @@ class ApiServices {
     }
   }
 
+  Future<Map<String,dynamic>> getPosts(String endPoint) async {
+    final Response<dynamic> response = await dio.get(_baseUrl + endPoint);
+    return response.data;
+  }
 }

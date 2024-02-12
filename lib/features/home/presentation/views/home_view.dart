@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_media_app/core/components/custom_appBar.dart';
+import 'package:social_media_app/core/utils/services_locator.dart';
+import 'package:social_media_app/features/home/data/repos/home_repo_impl.dart';
 import 'package:social_media_app/features/home/presentation/view_model/home_cubit/home_cubit.dart';
 import 'package:social_media_app/features/home/presentation/view_model/home_cubit/home_state.dart';
 
@@ -12,8 +14,8 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AppCubit(),
-      child: BlocConsumer<AppCubit, SocialMediaUiState>(
+      create: (context) => HomeCubit(getIt.get<HomeRepoImpl>())..getPosts(),
+      child: BlocConsumer<HomeCubit, HomeStates>(
         listener: (context, state) {
           if (state is NewPost) {
             //when click to post
@@ -22,7 +24,7 @@ class HomeView extends StatelessWidget {
           }
         },
         builder: (context, state) {
-          var cubit = AppCubit.get(context);
+          var cubit = HomeCubit.get(context);
           return Scaffold(
             appBar: customAppBar(
                 title: cubit.title[cubit.currentIndex], context: context),

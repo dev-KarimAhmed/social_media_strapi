@@ -1,110 +1,128 @@
-abstract class SocialMediaUiState {}
+import 'package:social_media_app/features/home/data/models/post_model/post_model.dart';
 
-class SocialMediaUiInitial extends SocialMediaUiState {}
+abstract class HomeStates {}
 
-class PasswordHideen extends SocialMediaUiState {}
+class HomeStatesIntial extends HomeStates {}
 
-class LoadingState extends SocialMediaUiState {}
+class PasswordHideen extends HomeStates {}
 
-class SuccessState extends SocialMediaUiState {
+class LoadingState extends HomeStates {}
+
+class SuccessState extends HomeStates {
   final String uId;
 
   SuccessState(this.uId);
 }
 
-class FailureState extends SocialMediaUiState {}
+class FailureState extends HomeStates {}
 
-class CreateUserSuccess extends SocialMediaUiState {}
+class CreateUserSuccess extends HomeStates {}
 
-class CreateUserFailure extends SocialMediaUiState {
+class CreateUserFailure extends HomeStates {
   final String error;
 
   CreateUserFailure(this.error);
 }
 
-class GetDataLoadingState extends SocialMediaUiState {}
+class GetDataLoadingState extends HomeStates {}
 
-class GetDataSuccessState extends SocialMediaUiState {}
+class GetDataSuccessState extends HomeStates {}
 
-class GetDataFailureState extends SocialMediaUiState {
+class GetDataFailureState extends HomeStates {
   final String error;
 
   GetDataFailureState(this.error);
 }
 
-class ChangeNavBottom extends SocialMediaUiState {}
+class ChangeNavBottom extends HomeStates {}
 
-class NewPost extends SocialMediaUiState {}
+class NewPost extends HomeStates {}
 
-class ProfileImagePickedSuccess extends SocialMediaUiState {}
+class ProfileImagePickedSuccess extends HomeStates {}
 
-class ProfileImagePickedError extends SocialMediaUiState {}
+class ProfileImagePickedError extends HomeStates {}
 
-class CoverImagePickedSuccess extends SocialMediaUiState {}
+class CoverImagePickedSuccess extends HomeStates {}
 
-class CoverImagePickedError extends SocialMediaUiState {}
+class CoverImagePickedError extends HomeStates {}
 
-class ProfileImageSuccessUpload extends SocialMediaUiState {}
+class ProfileImageSuccessUpload extends HomeStates {}
 
-class ProfileImageErrorUpload extends SocialMediaUiState {}
+class ProfileImageErrorUpload extends HomeStates {}
 
-class CoverImageSuccessUpload extends SocialMediaUiState {}
+class CoverImageSuccessUpload extends HomeStates {}
 
-class CoverImageErrorUpload extends SocialMediaUiState {}
+class CoverImageErrorUpload extends HomeStates {}
 
-class UpdateDataError extends SocialMediaUiState {}
+class UpdateDataError extends HomeStates {}
 
-class UpdateDataSuccess extends SocialMediaUiState {}
+class UpdateDataSuccess extends HomeStates {}
 
-class UpdateDataLoading extends SocialMediaUiState {}
+class UpdateDataLoading extends HomeStates {}
 
-class PostCreateLoading extends SocialMediaUiState {}
+class PostCreateLoading extends HomeStates {}
 
-class PostCreateSuccess extends SocialMediaUiState {}
+class PostCreateSuccess extends HomeStates {}
 
-class PostCreateError extends SocialMediaUiState {}
+class PostCreateError extends HomeStates {}
 
-class PostImagePickedSuccess extends SocialMediaUiState {}
+class PostImagePickedSuccess extends HomeStates {}
 
-class PostImagePickedRemoveSuccess extends SocialMediaUiState {}
+class PostImagePickedRemoveSuccess extends HomeStates {}
 
-class GetPostsLoading extends SocialMediaUiState {}
 
-class GetPostsSuccess extends SocialMediaUiState {}
+// class GetPostsSuccess extends HomeStates {}
 
-class GetPostsError extends SocialMediaUiState {
+class GetPostsError extends HomeStates {
   final String error;
 
   GetPostsError(this.error);
 }
 
-class LikeSuccess extends SocialMediaUiState {}
+class LikeSuccess extends HomeStates {}
 
-class LikeError extends SocialMediaUiState {}
+class LikeError extends HomeStates {}
 
-class GetUsersLoading extends SocialMediaUiState {}
+class GetUsersLoading extends HomeStates {}
 
-class GetUsersSuccess extends SocialMediaUiState {}
+class GetUsersSuccess extends HomeStates {}
 
-class GetUsersError extends SocialMediaUiState {
+class GetUsersError extends HomeStates {
   final String error;
 
   GetUsersError(this.error);
 }
 
-class SendMessageLoading extends SocialMediaUiState {}
+class SendMessageLoading extends HomeStates {}
 
-class SendMessageSuccess extends SocialMediaUiState {}
+class SendMessageSuccess extends HomeStates {}
 
-class SendMessageError extends SocialMediaUiState {
+class SendMessageError extends HomeStates {
   final String error;
 
   SendMessageError(this.error);
 }
 
-class GetMessagesSuccess extends SocialMediaUiState {}
-class GetMessagesLoading extends SocialMediaUiState {}
+class GetMessagesSuccess extends HomeStates {}
 
-class PostDeletedLoading extends SocialMediaUiState {}
-class PostDeletedSuccess extends SocialMediaUiState {}
-class PostDeletedError extends SocialMediaUiState {}
+class GetMessagesLoading extends HomeStates {}
+
+class PostDeletedLoading extends HomeStates {}
+
+class PostDeletedSuccess extends HomeStates {}
+
+class PostDeletedError extends HomeStates {}
+
+class GetPostsLoading extends HomeStates {}
+
+class GetPostesFailed extends HomeStates {
+  final String errMessage;
+
+  GetPostesFailed(this.errMessage);
+}
+
+class GetPostesSuccess extends HomeStates {
+  PostModel posts;
+
+  GetPostesSuccess(this.posts);
+}

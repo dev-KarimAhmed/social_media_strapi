@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:social_media_app/core/components/custom_sperator.dart';
-import 'package:social_media_app/features/authentication/data/models/register/register.dart';
+import 'package:social_media_app/features/home/data/models/post_model/post_model.dart';
 
 class PostItem extends StatelessWidget {
   const PostItem({
-    super.key,  this.authModel,
+    super.key,
+    this.postModel,
+    this.index,
   });
-  final AuthModel? authModel;
+  final PostModel? postModel;
+  final int? index;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -33,13 +37,14 @@ class PostItem extends StatelessWidget {
                       child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                       Row(
+                      Row(
                         children: [
                           Text(
-                          authModel?.user?.username ??  'Karim Ahmed',
+                            postModel?.data![index ?? 0].attributes?.name ??
+                                'Anonymous',
                           ),
-                        const  SizedBox(width: 5),
-                        const  Icon(
+                          const SizedBox(width: 5),
+                          const Icon(
                             Icons.check_circle,
                             size: 16,
                             color: Colors.blue,
@@ -47,7 +52,9 @@ class PostItem extends StatelessWidget {
                         ],
                       ),
                       Text(
-                        '23/10/2022',
+                        DateFormat('dd/M/yyyy hh:mm a').format(DateTime.parse(
+                                '${postModel?.data![index ?? 0].attributes?.createdAt}')
+                            .toLocal()),
                         style: Theme.of(context).textTheme.bodySmall,
                       )
                     ],
@@ -60,9 +67,13 @@ class PostItem extends StatelessWidget {
             const CustomSperator(),
             Row(
               children: [
-                Text(
-                 authModel?.jwt ?? 'Hello World',
-                  style: Theme.of(context).textTheme.titleMedium,
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * .9,
+                  child: Text(
+                    postModel?.data![index ?? 0].attributes?.description ??
+                        'Hello World',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
                 ),
               ],
             ),
