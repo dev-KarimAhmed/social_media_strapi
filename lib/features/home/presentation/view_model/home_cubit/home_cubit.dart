@@ -4,12 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:image_picker/image_picker.dart';
+import 'package:social_media_app/features/home/data/models/post_model/post_model.dart';
 import 'package:social_media_app/features/home/data/repos/home_repo.dart';
 import 'package:social_media_app/features/home/presentation/view_model/home_cubit/home_state.dart';
+import 'package:social_media_app/features/post/presentation/views/new_post_view.dart';
 
 import '../../../../chat/presentation/views/chat_view.dart';
 import '../../views/new_feeds.dart';
-import '../../../../post/presentation/views/new_post_view.dart';
 import '../../../../search/presentation/views/search.dart';
 import '../../../../settings/presentation/views/settings.dart';
 
@@ -32,8 +33,6 @@ class HomeCubit extends Cubit<HomeStates> {
 
   // function to change screens in navigationBar
   void changeBottomNav(int index) {
-    if (index == 1) {}
-
     if (index == 2) {
       emit(NewPost());
     } else {
@@ -70,15 +69,17 @@ class HomeCubit extends Cubit<HomeStates> {
     emit(CoverImagePickedSuccess());
   }
 
+  PostModel? post;
   Future<void> getPosts() async {
     emit(GetPostsLoading());
 
     var result = await homeRepo.getPosts();
 
-    result.fold(
-      (failure) => emit(GetPostesFailed(failure.errMessage)),
-      (posts) => emit(GetPostesSuccess(posts)),
-    );
+    result.fold((failure) => emit(GetPostesFailed(failure.errMessage)),
+        (posts) {
+      post = posts;
+      emit(GetPostesSuccess(posts));
+    });
   }
 
   // Function to pick an image from your gallery for post (imagePicker package)

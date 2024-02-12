@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:social_media_app/features/home/presentation/views/widgets/post_listview.dart';
 
 class NewsFeedView extends StatelessWidget {
@@ -8,7 +9,7 @@ class NewsFeedView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView(
-        children: const[
+        children: const [
           // state is AuthentcationSuccess
           //     ? CommunicationCard(
           //         authModel: state.authModel,

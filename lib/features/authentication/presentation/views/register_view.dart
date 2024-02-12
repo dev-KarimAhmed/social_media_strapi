@@ -22,8 +22,8 @@ class RegisterView extends StatelessWidget {
         AuthentcationCubit cubit = AuthentcationCubit.get(context);
         if (state is AuthentcationSuccess) {
           print('======================> ${state.authModel.user?.username}');
-          cubit
-              .saveToken(state.authModel.jwt ?? '')
+                       cubit.saveToken(state.authModel.jwt ?? '' , state.authModel.user?.username ?? '' , state.authModel.user?.id ?? 0)
+
               .then((value) => navigateWithoutBack(context, const HomeView()));
         } else if (state is AuthentcationError) {
           ScaffoldMessenger.of(context).showSnackBar(

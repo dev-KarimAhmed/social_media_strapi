@@ -1,24 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_media_app/core/components/custom_actionBtn.dart';
 import 'package:social_media_app/core/components/custom_circleAvatr.dart';
-import 'package:social_media_app/features/home/presentation/view_model/home_cubit/home_cubit.dart';
-import 'package:social_media_app/features/home/presentation/view_model/home_cubit/home_state.dart';
 
 class NewPostScreen extends StatelessWidget {
   NewPostScreen({super.key});
   final TextEditingController postController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<HomeCubit, HomeStates>(
-      listener: (context, state) {},
-      builder: (context, state) {
-        return Scaffold(
+    return Scaffold(
           appBar: AppBar(
             leading: IconButton(
               onPressed: () {
                 Navigator.pop(context);
-                HomeCubit.get(context).removePostImage();
+                
               },
               icon: const Icon(
                 Icons.arrow_back_ios_new,
@@ -27,8 +21,8 @@ class NewPostScreen extends StatelessWidget {
             ),
             backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             elevation: 0,
-            title:
-                Text('Add Post', style: Theme.of(context).textTheme.titleLarge),
+            title: Text('Add Post',
+                style: Theme.of(context).textTheme.titleLarge),
             actions: [
               CustomActionButton(
                 text: 'POST',
@@ -41,12 +35,10 @@ class NewPostScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 children: [
-              
-                    const LinearProgressIndicator(),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                
+                  const LinearProgressIndicator(),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   const Row(
                     children: [
                       CircleAvatar(
@@ -74,7 +66,7 @@ class NewPostScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  if (HomeCubit.get(context).postImage != null) ...[
+                
                     Stack(
                       alignment: Alignment.topRight,
                       children: [
@@ -82,10 +74,9 @@ class NewPostScreen extends StatelessWidget {
                           width: double.infinity,
                           height: 160,
                           decoration: BoxDecoration(
-                              image: DecorationImage(
+                              image:const DecorationImage(
                                 fit: BoxFit.cover,
-                                image: FileImage(
-                                    HomeCubit.get(context).postImage!),
+                                image: NetworkImage('https://img.freepik.com/free-vector/illustration-businessman_53876-5856.jpg?size=626&ext=jpg'),
                               ),
                               borderRadius: BorderRadius.circular(8)),
                         ),
@@ -94,7 +85,7 @@ class NewPostScreen extends StatelessWidget {
                           child: CustomCircleAvatar(
                             icon: Icons.close,
                             onPressed: () {
-                              HomeCubit.get(context).removePostImage();
+                              // HomeCubit.get(context).removePostImage();
                             },
                           ),
                         )
@@ -103,13 +94,13 @@ class NewPostScreen extends StatelessWidget {
                     const SizedBox(
                       height: 200,
                     ),
-                  ],
+              
                   Row(
                     children: [
                       Expanded(
                         child: TextButton(
                           onPressed: () {
-                            HomeCubit.get(context).pickedPostImageFromGallery();
+                           
                           },
                           child: const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -134,7 +125,6 @@ class NewPostScreen extends StatelessWidget {
             ),
           ),
         );
-      },
-    );
+      
   }
 }

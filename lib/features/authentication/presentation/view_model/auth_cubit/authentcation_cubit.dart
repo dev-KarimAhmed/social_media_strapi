@@ -1,6 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:social_media_app/features/authentication/data/models/register/register.dart';
 import 'package:social_media_app/features/authentication/data/repos/auth_repo.dart';
 import 'package:social_media_app/features/authentication/presentation/view_model/auth_cubit/authentcation_state.dart';
 import 'package:social_media_app/main.dart';
@@ -17,16 +18,22 @@ class AuthentcationCubit extends Cubit<AuthentcationState> {
     emit(PasswordHideen());
   }
 
-  Future saveToken(String token) async {
+
+
+  Future saveToken(String token , String name , int id) async {
     await prefs!.setString('token', token);
+    await prefs!.setString('name', name);
+    await prefs!.setInt('id', id);
   }
 
-  String getToken() {
-    return prefs!.getString('token') ?? '';
+  List getToken() {
+    return [prefs!.getString('token') , prefs!.getString('name') , prefs!.getInt('id')];
   }
 
   Future signOut() async {
     await prefs!.setString('token', '');
+    await prefs!.setString('name', '');
+    await prefs!.setInt('id', 0);
     emit(SignedOutSuccess());
   }
 
