@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:social_media_app/constants.dart';
+import 'package:social_media_app/core/navigationfunctions.dart';
 import 'package:social_media_app/features/authentication/presentation/view_model/auth_cubit/authentcation_cubit.dart';
 import 'package:social_media_app/features/authentication/presentation/view_model/auth_cubit/authentcation_state.dart';
 import 'package:social_media_app/features/authentication/presentation/views/register_view.dart';
@@ -24,11 +24,7 @@ class LoginView extends StatelessWidget {
           print('======================> ${state.authModel.user?.username}');
           cubit
               .saveToken(state.authModel.jwt ?? '')
-              .then((value) => Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(builder: (context) => const HomeView()),
-                    (route) => false,
-                  ));
-          print('======================> $token');
+              .then((value) => navigateWithoutBack(context ,const HomeView()));
         } else if (state is AuthentcationError) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -142,10 +138,7 @@ class LoginView extends StatelessWidget {
                                     onTap: () {
                                       // GoRouter.of(context)
                                       //     .push(AppRouter.kRegisterView);
-                                      Navigator.push(context,
-                                          MaterialPageRoute(builder: (context) {
-                                        return RegisterView();
-                                      }));
+                                      navigateTo(context, RegisterView());
                                     },
                                     text: 'Register',
                                   ),
@@ -160,4 +153,6 @@ class LoginView extends StatelessWidget {
       },
     );
   }
+
+
 }

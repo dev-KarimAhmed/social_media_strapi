@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:social_media_app/core/navigationfunctions.dart';
 import 'package:social_media_app/features/authentication/presentation/view_model/auth_cubit/authentcation_cubit.dart';
 import 'package:social_media_app/features/authentication/presentation/view_model/auth_cubit/authentcation_state.dart';
 import 'package:social_media_app/features/authentication/presentation/views/widgets/custom_text_button.dart';
@@ -21,10 +22,9 @@ class RegisterView extends StatelessWidget {
         AuthentcationCubit cubit = AuthentcationCubit.get(context);
         if (state is AuthentcationSuccess) {
           print('======================> ${state.authModel.user?.username}');
-        cubit.saveToken(state.authModel.jwt ?? '').then((value) => Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(builder: (context) =>const HomeView()),
-                    (route) => false,
-                  ));
+          cubit
+              .saveToken(state.authModel.jwt ?? '')
+              .then((value) => navigateWithoutBack(context, const HomeView()));
         } else if (state is AuthentcationError) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(

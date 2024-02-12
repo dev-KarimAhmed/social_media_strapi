@@ -1,6 +1,4 @@
 // import 'package:go_router/go_router.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
-// import 'package:social_media_app/constants.dart';
 // import 'package:social_media_app/features/authentication/presentation/views/login_view.dart';
 // import 'package:social_media_app/features/authentication/presentation/views/register_view.dart';
 // import 'package:social_media_app/features/home/presentation/views/home_view.dart';

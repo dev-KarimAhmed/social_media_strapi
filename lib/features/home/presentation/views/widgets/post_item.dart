@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:social_media_app/core/components/custom_sperator.dart';
-
+import 'package:social_media_app/features/authentication/data/models/register/register.dart';
 
 class PostItem extends StatelessWidget {
   const PostItem({
-    super.key,
+    super.key,  this.authModel,
   });
-
+  final AuthModel? authModel;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -33,13 +33,13 @@ class PostItem extends StatelessWidget {
                       child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Row(
+                       Row(
                         children: [
                           Text(
-                            'Karim Ahmed',
+                          authModel?.user?.username ??  'Karim Ahmed',
                           ),
-                          SizedBox(width: 5),
-                          Icon(
+                        const  SizedBox(width: 5),
+                        const  Icon(
                             Icons.check_circle,
                             size: 16,
                             color: Colors.blue,
@@ -61,7 +61,7 @@ class PostItem extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  'Hello World',
+                 authModel?.jwt ?? 'Hello World',
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ],
@@ -137,7 +137,7 @@ class PostItem extends StatelessWidget {
                     onTap: () {},
                     child: Row(
                       children: [
-                       const CircleAvatar(
+                        const CircleAvatar(
                           backgroundImage: NetworkImage(
                               'https://img.freepik.com/premium-photo/giant-mountains-with-snow-green-valley-with-meadow-forest-sunny-day_102332-806.jpg?size=626&ext=jpg'),
                           radius: 15,
