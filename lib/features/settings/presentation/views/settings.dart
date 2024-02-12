@@ -21,145 +21,153 @@ class SettingsView extends StatelessWidget {
       builder: (context, state) {
         var cubit = AuthentcationCubit.get(context);
         return Scaffold(
-          body: Padding(
-            padding: const EdgeInsets.all(8),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 200,
-                  child: Stack(
-                    alignment: AlignmentDirectional.bottomCenter,
-                    children: [
-                      Align(
-                        alignment: Alignment.topCenter,
-                        child: Container(
-                          width: double.infinity,
-                          height: 160,
-                          decoration: const BoxDecoration(
-                              image: DecorationImage(
-                                fit: BoxFit.cover,
-                                image: NetworkImage(
-                                    'https://img.freepik.com/free-vector/illustration-businessman_53876-5856.jpg?size=626&ext=jpg'),
-                              ),
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(8),
-                                  topRight: Radius.circular(8))),
-                        ),
-                      ),
-                      const CircleAvatar(
-                        radius: 54,
-                        backgroundColor: Colors.white,
-                        child: CircleAvatar(
-                          backgroundImage: NetworkImage(
-                              'https://img.freepik.com/free-vector/illustration-businessman_53876-5856.jpg?size=626&ext=jpg'),
-                          radius: 50,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                Text(
-                  'Karim Ahmed',
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
-                Text(
-                  'bio.....',
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () {},
-                          child: Column(
-                            children: [
-                              const Text('100'),
-                              Text(
-                                'Posts',
-                                style: Theme.of(context).textTheme.bodySmall,
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () {},
-                          child: Column(
-                            children: [
-                              const Text('265'),
-                              Text(
-                                'Photos',
-                                style: Theme.of(context).textTheme.bodySmall,
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () {},
-                          child: Column(
-                            children: [
-                              const Text('10k'),
-                              Text(
-                                'Followers',
-                                style: Theme.of(context).textTheme.bodySmall,
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () {},
-                          child: Column(
-                            children: [
-                              const Text('64'),
-                              Text(
-                                'Following',
-                                style: Theme.of(context).textTheme.bodySmall,
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: OutlinedButton(
-                        onPressed: () {},
-                        child: const Text(
-                          'Add photo',
-                        ),
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        cubit.signOut();
-                        // token = null;
-                        // print(token);
-                        // GoRouter.of(context)
-                        //     .pushReplacement(AppRouter.kLoginView);
-                      },
-                      icon: const Icon(
-                        Icons.edit,
-                        color: Colors.blue,
-                      ),
-                    ),
-                  ],
+          body: state is! AuthentcationSuccess
+              ? const Center(
+                  child: Text('data'),
                 )
-              ],
-            ),
-          ),
+              : Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 200,
+                        child: Stack(
+                          alignment: AlignmentDirectional.bottomCenter,
+                          children: [
+                            Align(
+                              alignment: Alignment.topCenter,
+                              child: Container(
+                                width: double.infinity,
+                                height: 160,
+                                decoration: const BoxDecoration(
+                                    image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: NetworkImage(
+                                          'https://img.freepik.com/free-vector/illustration-businessman_53876-5856.jpg?size=626&ext=jpg'),
+                                    ),
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(8),
+                                        topRight: Radius.circular(8))),
+                              ),
+                            ),
+                            const CircleAvatar(
+                              radius: 54,
+                              backgroundColor: Colors.white,
+                              child: CircleAvatar(
+                                backgroundImage: NetworkImage(
+                                    'https://img.freepik.com/free-vector/illustration-businessman_53876-5856.jpg?size=626&ext=jpg'),
+                                radius: 50,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        state.authModel.user?.username ?? '',
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                      Text(
+                        'bio.....',
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {},
+                                child: Column(
+                                  children: [
+                                    const Text('100'),
+                                    Text(
+                                      'Posts',
+                                      style:
+                                          Theme.of(context).textTheme.bodySmall,
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {},
+                                child: Column(
+                                  children: [
+                                    const Text('265'),
+                                    Text(
+                                      'Photos',
+                                      style:
+                                          Theme.of(context).textTheme.bodySmall,
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {},
+                                child: Column(
+                                  children: [
+                                    const Text('10k'),
+                                    Text(
+                                      'Followers',
+                                      style:
+                                          Theme.of(context).textTheme.bodySmall,
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {},
+                                child: Column(
+                                  children: [
+                                    const Text('64'),
+                                    Text(
+                                      'Following',
+                                      style:
+                                          Theme.of(context).textTheme.bodySmall,
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: OutlinedButton(
+                              onPressed: () {},
+                              child: const Text(
+                                'Add photo',
+                              ),
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              cubit.signOut();
+                              // token = null;
+                              // print(token);
+                              // GoRouter.of(context)
+                              //     .pushReplacement(AppRouter.kLoginView);
+                            },
+                            icon: const Icon(
+                              Icons.exit_to_app,
+                              color: Colors.blue,
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
         );
       },
     );
