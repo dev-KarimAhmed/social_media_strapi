@@ -70,7 +70,6 @@ class PostImagePickedSuccess extends HomeStates {}
 
 class PostImagePickedRemoveSuccess extends HomeStates {}
 
-
 // class GetPostsSuccess extends HomeStates {}
 
 class GetPostsError extends HomeStates {
@@ -126,6 +125,7 @@ class GetPostesSuccess extends HomeStates {
 
   GetPostesSuccess(this.posts);
 }
+
 class PostDeleteLoading extends HomeStates {}
 
 class PostDeleteError extends HomeStates {

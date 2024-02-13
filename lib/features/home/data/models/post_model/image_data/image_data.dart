@@ -2,13 +2,13 @@ import 'package:equatable/equatable.dart';
 
 import 'attributes.dart';
 
-class Data extends Equatable {
+class ImageData extends Equatable {
   final int? id;
   final Attributes? attributes;
 
-  const Data({this.id, this.attributes});
+  const ImageData({this.id, this.attributes});
 
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
+  factory ImageData.fromJson(Map<String, dynamic> json) => ImageData(
         id: json['id'] as int?,
         attributes: json['attributes'] == null
             ? null

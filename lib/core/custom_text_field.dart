@@ -6,7 +6,9 @@ class CustomTextField extends StatelessWidget {
     this.hintText,
     this.prefixIcon,
     this.suffixIcon,
-    this.obscureText, this.controller, this.keyboardType,
+    this.obscureText,
+    this.controller,
+    this.keyboardType,
   });
   final String? hintText;
   final Widget? prefixIcon;
@@ -29,7 +31,7 @@ class CustomTextField extends StatelessWidget {
       decoration: InputDecoration(
         prefixIcon: prefixIcon,
         hintText: hintText,
-        border:const OutlineInputBorder(),
+        border: const OutlineInputBorder(),
         suffixIcon: suffixIcon,
       ),
     );

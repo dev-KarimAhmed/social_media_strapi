@@ -37,4 +37,4 @@ class SocialMediaApp extends StatelessWidget {
     );
   }
 }
-     // create: (context) => AuthentcationCubit(getIt.get<AuthRepoImpl>()),
+// create: (context) => AuthentcationCubit(getIt.get<AuthRepoImpl>()),

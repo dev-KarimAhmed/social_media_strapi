@@ -7,7 +7,8 @@ class PostItem extends StatelessWidget {
   const PostItem({
     super.key,
     this.postModel,
-    this.index, this.deleteFunction,
+    this.index,
+    this.deleteFunction,
   });
   final PostModel? postModel;
   final int? index;
@@ -41,7 +42,8 @@ class PostItem extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            postModel?.data![index ?? 0].attributes?.name ??
+                            postModel?.data![index ?? 0].attributes?.user?.datum
+                                    ?.userData?.username ??
                                 'Anonymous',
                           ),
                           const SizedBox(width: 5),
@@ -77,7 +79,7 @@ class PostItem extends StatelessWidget {
                                       child: const Text('Cancel'),
                                     ),
                                     TextButton(
-                                      onPressed:deleteFunction,
+                                      onPressed: deleteFunction,
                                       child: const Text('Delete'),
                                     )
                                   ]);
@@ -107,10 +109,20 @@ class PostItem extends StatelessWidget {
                 width: double.infinity,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
-                    image: const DecorationImage(
+                    image: DecorationImage(
                       fit: BoxFit.cover,
-                      image: NetworkImage(
-                          'https://img.freepik.com/premium-photo/giant-mountains-with-snow-green-valley-with-meadow-forest-sunny-day_102332-806.jpg?size=626&ext=jpg'),
+                      image: NetworkImage(postModel
+                                  ?.data![index ?? 0]
+                                  .attributes
+                                  ?.image
+                                  ?.imageData
+                                  ?.attributes
+                                  ?.formats
+                                  ?.thumbnail
+                                  ?.url !=
+                              null
+                          ? 'http://192.168.1.5:1337${postModel?.data![index ?? 0].attributes?.image?.imageData?.attributes?.formats?.thumbnail?.url}'
+                          : 'https://img.freepik.com/premium-photo/giant-mountains-with-snow-green-valley-with-meadow-forest-sunny-day_102332-806.jpg?size=626&ext=jpg'),
                     )),
               ),
             ),

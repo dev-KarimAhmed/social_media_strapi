@@ -15,7 +15,7 @@ class HomeRepoImpl implements HomeRepo {
     try {
       var data = await apiServices.getPosts('posts?populate=*');
       PostModel posts = PostModel.fromJson(data);
-      
+
       return right(posts);
     } catch (e) {
       if (e is DioException) {
@@ -24,13 +24,14 @@ class HomeRepoImpl implements HomeRepo {
       return left(ServerError(e.toString()));
     }
   }
-  
+
   @override
-  Future<Either<Failure, Map<String, dynamic>>> deletePost({required int id}) async{
-  try {
+  Future<Either<Failure, Map<String, dynamic>>> deletePost(
+      {required int id}) async {
+    try {
       var data = await apiServices.deletePost('posts/$id');
       // PostModel posts = PostModel.fromJson(data);
-      
+
       return right(data);
     } catch (e) {
       if (e is DioException) {

@@ -3,8 +3,6 @@ import 'package:social_media_app/core/components/custom_actionBtn.dart';
 import 'package:social_media_app/core/components/custom_circleAvatr.dart';
 import 'package:social_media_app/core/components/custom_textFormField.dart';
 
-
-
 class EditProfile extends StatelessWidget {
   EditProfile({super.key});
   final TextEditingController nameController = TextEditingController();

@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 class MyMessage extends StatelessWidget {
   const MyMessage({
     super.key,
-  
   });
- 
+
   @override
   Widget build(BuildContext context) {
     return Align(
@@ -19,7 +18,7 @@ class MyMessage extends StatelessWidget {
                 topLeft: Radius.circular(10),
                 topRight: Radius.circular(10),
               )),
-          child:const Text('message.text!')),
+          child: const Text('message.text!')),
     );
   }
 }

@@ -7,7 +7,8 @@ class CustomCircleAvatar extends StatelessWidget {
     super.key,
     this.size,
     this.radius,
-    required this.onPressed, required this.icon,
+    required this.onPressed,
+    required this.icon,
   });
   final double? size, radius;
   final void Function()? onPressed;

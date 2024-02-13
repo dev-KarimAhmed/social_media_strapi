@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class ChatDetailsView extends StatelessWidget {
   ChatDetailsView({super.key});
 
@@ -24,7 +23,7 @@ class ChatDetailsView extends StatelessWidget {
         titleSpacing: 0,
         title: Row(
           children: [
-           const CircleAvatar(
+            const CircleAvatar(
               radius: 20,
               backgroundImage: NetworkImage(
                   'https://img.freepik.com/free-photo/cute-cat-laying-grass_23-2150385852.jpg?size=626&ext=jpg'),
@@ -33,7 +32,7 @@ class ChatDetailsView extends StatelessWidget {
               width: 10,
             ),
             Text(
-               'someone',
+              'someone',
               style: Theme.of(context).textTheme.titleLarge,
             )
           ],
@@ -46,23 +45,21 @@ class ChatDetailsView extends StatelessWidget {
         ),
         child: Column(
           children: [
-            
-                 Expanded(
-                    child: ListView.separated(
-                      controller: controller,
-                      physics: const BouncingScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        return const Text('Message');
-                      },
-                      separatorBuilder: (context, index) {
-                        return const SizedBox(
-                          height: 15,
-                        );
-                      },
-                      itemCount: 6,
-                    ),
-                  ),
-               
+            Expanded(
+              child: ListView.separated(
+                controller: controller,
+                physics: const BouncingScrollPhysics(),
+                itemBuilder: (context, index) {
+                  return const Text('Message');
+                },
+                separatorBuilder: (context, index) {
+                  return const SizedBox(
+                    height: 15,
+                  );
+                },
+                itemCount: 6,
+              ),
+            ),
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
@@ -110,5 +107,3 @@ class ChatDetailsView extends StatelessWidget {
     );
   }
 }
-
-

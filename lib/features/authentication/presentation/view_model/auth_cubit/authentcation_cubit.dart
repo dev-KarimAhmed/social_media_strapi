@@ -18,16 +18,18 @@ class AuthentcationCubit extends Cubit<AuthentcationState> {
     emit(PasswordHideen());
   }
 
-
-
-  Future saveToken(String token , String name , int id) async {
+  Future saveToken(String token, String name, int id) async {
     await prefs!.setString('token', token);
     await prefs!.setString('name', name);
     await prefs!.setInt('id', id);
   }
 
   List getToken() {
-    return [prefs!.getString('token') , prefs!.getString('name') , prefs!.getInt('id')];
+    return [
+      prefs!.getString('token'),
+      prefs!.getString('name'),
+      prefs!.getInt('id')
+    ];
   }
 
   Future signOut() async {

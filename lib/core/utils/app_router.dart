@@ -12,7 +12,7 @@
 //       GoRoute(
 //         path: '/',
 //         builder: (context, state) {
-          
+
 //           if (token == '') {
 //             return LoginView();
 //           } else {
@@ -30,7 +30,5 @@
 //       ),
 //     ],
 //   );
-  
+
 // }
-
-

@@ -1,8 +1,6 @@
 import 'package:social_media_app/features/authentication/data/models/register/register.dart';
 
-abstract class AuthentcationState {
-
-}
+abstract class AuthentcationState {}
 
 class AuthentcationInitial extends AuthentcationState {}
 

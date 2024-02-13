@@ -5,7 +5,6 @@ class ReceiverMessage extends StatelessWidget {
     super.key,
   });
 
-
   @override
   Widget build(BuildContext context) {
     return Align(
@@ -19,7 +18,7 @@ class ReceiverMessage extends StatelessWidget {
                 topLeft: Radius.circular(10),
                 topRight: Radius.circular(10),
               )),
-          child:const Text('message.text!')),
+          child: const Text('message.text!')),
     );
   }
 }

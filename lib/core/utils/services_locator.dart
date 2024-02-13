@@ -8,6 +8,8 @@ final getIt = GetIt.instance;
 
 void setupServiceLocator() {
   getIt.registerLazySingleton<ApiServices>(() => ApiServices(dio: Dio()));
-  getIt.registerLazySingleton<AuthRepoImpl>(() => AuthRepoImpl(getIt<ApiServices>()));
-  getIt.registerLazySingleton<HomeRepoImpl>(() => HomeRepoImpl(getIt<ApiServices>()));
+  getIt.registerLazySingleton<AuthRepoImpl>(
+      () => AuthRepoImpl(getIt<ApiServices>()));
+  getIt.registerLazySingleton<HomeRepoImpl>(
+      () => HomeRepoImpl(getIt<ApiServices>()));
 }

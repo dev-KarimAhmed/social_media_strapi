@@ -16,13 +16,13 @@ class CustomActionButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding:const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         alignment: Alignment.center,
         decoration:
             BoxDecoration(color: Theme.of(context).scaffoldBackgroundColor),
         child: Text(
           text,
-          style:const TextStyle(color: Colors.blue),
+          style: const TextStyle(color: Colors.blue),
         ),
       ),
     );

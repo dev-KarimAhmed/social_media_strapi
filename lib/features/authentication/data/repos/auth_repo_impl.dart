@@ -29,8 +29,6 @@ class AuthRepoImpl implements AuthRepo {
       final AuthModel authModel =
           AuthModel.fromJson(data.data as Map<String, dynamic>);
 
-
-
       return right(authModel);
     } catch (e) {
       if (e is DioException) {
@@ -55,7 +53,6 @@ class AuthRepoImpl implements AuthRepo {
       final AuthModel authModel =
           AuthModel.fromJson(data.data as Map<String, dynamic>);
 
- 
       return right(authModel);
     } catch (e) {
       if (e is DioException) {
