@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:image_picker/image_picker.dart';
+import 'package:social_media_app/features/home/data/models/post_image/post_image.dart';
 import 'package:social_media_app/features/home/data/models/post_model/post_model.dart';
+import 'package:social_media_app/features/home/data/models/post_post_model/post_post_model.dart';
 import 'package:social_media_app/features/home/data/repos/home_repo.dart';
 import 'package:social_media_app/features/home/presentation/view_model/home_cubit/home_state.dart';
 import 'package:social_media_app/features/post/presentation/views/new_post_view.dart';
@@ -90,6 +92,7 @@ class HomeCubit extends Cubit<HomeStates> {
     });
   }
 
+  PostPostModel? postPostModel;
   Future<void> createPost({
     required String token,
     required Map<String, dynamic> apiData,
@@ -97,10 +100,26 @@ class HomeCubit extends Cubit<HomeStates> {
     emit(PostedLoading());
     var result = await homeRepo.post(token: token, apiData: apiData);
     result.fold((failure) => emit(PostedError(errMessage: failure.errMessage)),
-        (r) {
+        (postpostModel) {
+      postPostModel = postpostModel;
       emit(PostedSuccess());
+    });
+  }
 
-   
+  PostImage? postImageModel;
+
+  Future<void> uploadPostImage({
+    required String token,
+    required Map<String, dynamic> postImageData,
+  }) async {
+    emit(PostImageUploadLoading());
+    var result = await homeRepo.uploadImageToPost(
+        token: token, apiImagePostData: postImageData);
+    result.fold(
+        (failure) => emit(PostImageUploadError(errMessage: failure.errMessage)),
+        (postApiImage) {
+      postImageModel = postApiImage;
+      emit(PostImageUploadSuccess());
     });
   }
 

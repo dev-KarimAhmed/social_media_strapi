@@ -24,9 +24,15 @@ class NewPostScreen extends StatelessWidget {
 
           if (state is PostedSuccess) {
             postController.clear();
+            print(HomeCubit.get(context).postPostModel?.data?.id);
             Navigator.pop(context);
           }
-          
+          if (state is PostedError) {
+            print(state.errMessage);
+          }
+          if (state is PostImageUploadError) {
+            print("IMAGE==================>" + state.errMessage);
+          }
         },
         builder: (context, state) {
           AuthentcationCubit cubit = AuthentcationCubit.get(context);
@@ -63,6 +69,20 @@ class NewPostScreen extends StatelessWidget {
                               }
                             },
                           );
+                          // HomeCubit.get(context).postImage != null
+                          //     ? HomeCubit.get(context).uploadPostImage(
+                          //         token: cubit.getToken()[0],
+                          //         postImageData: {
+                          //           "refId": HomeCubit.get(context)
+                          //               .postPostModel
+                          //               ?.data
+                          //               ?.id,
+                          //           "ref": "api::post.post",
+                          //           "field": "image",
+                          //           "file": HomeCubit.get(context).postImage
+                          //         },
+                          //       )
+                          //     : print('No image');
                         },
                       ),
                     ],

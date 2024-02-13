@@ -138,10 +138,21 @@ class PostDeleteError extends HomeStates {
 class PostDeleteSuccess extends HomeStates {}
 
 class PostedSuccess extends HomeStates {}
+
 class PostedLoading extends HomeStates {}
+
 class PostedError extends HomeStates {
   String errMessage;
   PostedError({
+    required this.errMessage,
+  });
+}
+
+class PostImageUploadLoading extends HomeStates {}
+class PostImageUploadSuccess extends HomeStates {}
+class PostImageUploadError extends HomeStates {
+  String errMessage;
+  PostImageUploadError({
     required this.errMessage,
   });
   

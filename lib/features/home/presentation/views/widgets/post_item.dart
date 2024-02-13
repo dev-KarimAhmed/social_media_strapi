@@ -8,7 +8,8 @@ class PostItem extends StatelessWidget {
     super.key,
     this.postModel,
     this.index,
-    this.deleteFunction, this.reload,
+    this.deleteFunction,
+    this.reload,
   });
   final PostModel? postModel;
   final int? index;

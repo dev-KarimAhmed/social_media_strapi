@@ -1,8 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:social_media_app/features/home/data/models/post_model/image_data/image_data.dart';
 
-
-
 class Image extends Equatable {
   final ImageData? imageData;
 
