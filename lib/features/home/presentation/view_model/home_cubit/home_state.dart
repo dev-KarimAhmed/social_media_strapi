@@ -126,3 +126,12 @@ class GetPostesSuccess extends HomeStates {
 
   GetPostesSuccess(this.posts);
 }
+class PostDeleteLoading extends HomeStates {}
+
+class PostDeleteError extends HomeStates {
+  final String errMessage;
+
+  PostDeleteError(this.errMessage);
+}
+
+class PostDeleteSuccess extends HomeStates {}

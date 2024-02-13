@@ -7,10 +7,11 @@ class PostItem extends StatelessWidget {
   const PostItem({
     super.key,
     this.postModel,
-    this.index,
+    this.index, this.deleteFunction,
   });
   final PostModel? postModel;
   final int? index;
+  final void Function()? deleteFunction;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -60,7 +61,29 @@ class PostItem extends StatelessWidget {
                     ],
                   )),
                   IconButton(
-                      onPressed: () {}, icon: const Icon(Icons.delete_rounded))
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                  title: const Text('Delete Post'),
+                                  content: const Text(
+                                      'Are you sure you want to delete this post?'),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: const Text('Cancel'),
+                                    ),
+                                    TextButton(
+                                      onPressed:deleteFunction,
+                                      child: const Text('Delete'),
+                                    )
+                                  ]);
+                            });
+                      },
+                      icon: const Icon(Icons.delete_rounded))
                 ],
               ),
             ),

@@ -4,4 +4,5 @@ import 'package:social_media_app/features/home/data/models/post_model/post_model
 
 abstract class HomeRepo {
   Future<Either<Failure,PostModel>> getPosts();
+  Future<Either<Failure,Map<String, dynamic>>> deletePost({required int id});
 }

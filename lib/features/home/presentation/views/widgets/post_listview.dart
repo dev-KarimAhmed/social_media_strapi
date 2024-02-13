@@ -25,11 +25,21 @@ class PostsListView extends StatelessWidget {
                   return PostItem(
                     postModel: cubit.post,
                     index: index,
+                    deleteFunction: () {
+                      cubit.deletePost(
+                        id: cubit.post!.data![index].id ?? 0,
+                      );
+                      if (state is PostDeleteError) {
+                        print(state.errMessage);
+                      } else {
+                        Navigator.pop(context);
+                      }
+                    },
                   );
                 },
                 separatorBuilder: (context, index) =>
                     const SizedBox(height: 10),
-                itemCount:cubit.post!.data!.length,
+                itemCount: cubit.post!.data!.length,
               );
       },
     );

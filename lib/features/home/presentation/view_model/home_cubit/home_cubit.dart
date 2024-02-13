@@ -82,6 +82,14 @@ class HomeCubit extends Cubit<HomeStates> {
     });
   }
 
+  Future<void> deletePost({required int id}) async {
+    emit(PostDeleteLoading());
+    var result = await homeRepo.deletePost(id: id);
+    result.fold((failure) => emit(PostDeleteError(failure.errMessage)), (r) {
+      getPosts().then((value) => emit(PostDeleteSuccess()));
+    });
+  }
+
   // Function to pick an image from your gallery for post (imagePicker package)
   File? postImage;
   Future pickedPostImageFromGallery() async {

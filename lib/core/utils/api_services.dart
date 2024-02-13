@@ -42,4 +42,8 @@ class ApiServices {
     final Response<dynamic> response = await dio.get(_baseUrl + endPoint);
     return response.data;
   }
+  Future<Map<String,dynamic>> deletePost(String endPoint) async {
+    final Response<dynamic> response = await dio.delete(_baseUrl + endPoint );
+    return response.data;
+  }
 }
