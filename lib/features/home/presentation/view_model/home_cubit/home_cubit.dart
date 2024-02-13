@@ -82,11 +82,25 @@ class HomeCubit extends Cubit<HomeStates> {
     });
   }
 
-  Future<void> deletePost({required int id , required String token}) async {
+  Future<void> deletePost({required int id, required String token}) async {
     emit(PostDeleteLoading());
-    var result = await homeRepo.deletePost(id: id , token: token);
+    var result = await homeRepo.deletePost(id: id, token: token);
     result.fold((failure) => emit(PostDeleteError(failure.errMessage)), (r) {
       getPosts(token: token).then((value) => emit(PostDeleteSuccess()));
+    });
+  }
+
+  Future<void> createPost({
+    required String token,
+    required Map<String, dynamic> apiData,
+  }) async {
+    emit(PostedLoading());
+    var result = await homeRepo.post(token: token, apiData: apiData);
+    result.fold((failure) => emit(PostedError(errMessage: failure.errMessage)),
+        (r) {
+      emit(PostedSuccess());
+
+   
     });
   }
 

@@ -26,6 +26,10 @@ class PostsListView extends StatelessWidget {
                   return PostItem(
                     postModel: cubit.post,
                     index: index,
+                    reload: () {
+                      cubit.getPosts(
+                          token: AuthentcationCubit.get(context).getToken()[0]);
+                    },
                     deleteFunction: () {
                       cubit.deletePost(
                         id: cubit.post!.data![index].id ?? 0,

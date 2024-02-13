@@ -1,7 +1,6 @@
 // ignore_for_file: depend_on_referenced_packages
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:social_media_app/features/authentication/data/models/register/register.dart';
 import 'package:social_media_app/features/authentication/data/repos/auth_repo.dart';
 import 'package:social_media_app/features/authentication/presentation/view_model/auth_cubit/authentcation_state.dart';
 import 'package:social_media_app/main.dart';

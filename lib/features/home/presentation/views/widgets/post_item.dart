@@ -8,11 +8,12 @@ class PostItem extends StatelessWidget {
     super.key,
     this.postModel,
     this.index,
-    this.deleteFunction,
+    this.deleteFunction, this.reload,
   });
   final PostModel? postModel;
   final int? index;
   final void Function()? deleteFunction;
+  final void Function()? reload;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -62,30 +63,37 @@ class PostItem extends StatelessWidget {
                       )
                     ],
                   )),
-                  IconButton(
-                      onPressed: () {
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                  title: const Text('Delete Post'),
-                                  content: const Text(
-                                      'Are you sure you want to delete this post?'),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: const Text('Cancel'),
-                                    ),
-                                    TextButton(
-                                      onPressed: deleteFunction,
-                                      child: const Text('Delete'),
-                                    )
-                                  ]);
-                            });
-                      },
-                      icon: const Icon(Icons.delete_rounded))
+                  Row(
+                    children: [
+                      IconButton(
+                          onPressed: () {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                      title: const Text('Delete Post'),
+                                      content: const Text(
+                                          'Are you sure you want to delete this post?'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: const Text('Cancel'),
+                                        ),
+                                        TextButton(
+                                          onPressed: deleteFunction,
+                                          child: const Text('Delete'),
+                                        )
+                                      ]);
+                                });
+                          },
+                          icon: const Icon(Icons.delete_rounded)),
+                      IconButton(
+                          onPressed: reload,
+                          icon: Icon(Icons.network_check_sharp))
+                    ],
+                  )
                 ],
               ),
             ),
@@ -102,30 +110,24 @@ class PostItem extends StatelessWidget {
                 ),
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 16),
-              child: Container(
-                height: 140,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: NetworkImage(postModel
-                                  ?.data![index ?? 0]
-                                  .attributes
-                                  ?.image
-                                  ?.imageData
-                                  ?.attributes
-                                  ?.formats
-                                  ?.thumbnail
-                                  ?.url !=
-                              null
-                          ? 'http://192.168.1.5:1337${postModel?.data![index ?? 0].attributes?.image?.imageData?.attributes?.formats?.thumbnail?.url}'
-                          : 'https://img.freepik.com/premium-photo/giant-mountains-with-snow-green-valley-with-meadow-forest-sunny-day_102332-806.jpg?size=626&ext=jpg'),
-                    )),
-              ),
-            ),
+            postModel?.data![index ?? 0].attributes?.image?.imageData
+                        ?.attributes?.formats?.thumbnail?.url !=
+                    null
+                ? Padding(
+                    padding: const EdgeInsets.only(top: 16),
+                    child: Container(
+                      height: 140,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: NetworkImage(
+                                'http://192.168.1.5:1337${postModel?.data![index ?? 0].attributes?.image?.imageData?.attributes?.formats?.thumbnail?.url}'),
+                          )),
+                    ),
+                  )
+                : Container(),
             Padding(
               padding: const EdgeInsets.all(12.0),
               child: Row(

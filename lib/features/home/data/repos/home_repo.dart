@@ -5,4 +5,5 @@ import 'package:social_media_app/features/home/data/models/post_model/post_model
 abstract class HomeRepo {
   Future<Either<Failure, PostModel>> getPosts({required String token});
   Future<Either<Failure, Map<String, dynamic>>> deletePost({required int id , required String token});
+  Future<Either<Failure, Map<String, dynamic>>> post({ required String token , required Map<String, dynamic> apiData});
 }

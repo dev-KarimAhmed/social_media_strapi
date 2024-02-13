@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:social_media_app/features/home/data/models/post_model/post_model.dart';
 
 abstract class HomeStates {}
@@ -135,3 +136,13 @@ class PostDeleteError extends HomeStates {
 }
 
 class PostDeleteSuccess extends HomeStates {}
+
+class PostedSuccess extends HomeStates {}
+class PostedLoading extends HomeStates {}
+class PostedError extends HomeStates {
+  String errMessage;
+  PostedError({
+    required this.errMessage,
+  });
+  
+}

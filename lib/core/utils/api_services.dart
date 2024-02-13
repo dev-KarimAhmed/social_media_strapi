@@ -52,4 +52,40 @@ class ApiServices {
     ));
     return response.data;
   }
+
+  Future<Response> post(String endPoint,String token ,  Map<String, dynamic> data) async {
+  try {
+   
+
+    final Response<dynamic> response = await dio.post(
+      _baseUrl + endPoint,
+      data: data,
+       options: Options(
+      headers: {'Authorization': 'Bearer $token'},
+    )
+      // You can also add other options like headers if needed
+    );
+
+    // You might want to handle errors or status codes here if needed
+
+    return response;
+  } catch (e) {
+    // Handle exceptions or errors here, if necessary
+    rethrow;
+  }
 }
+
+}
+
+
+
+/**
+ *  {
+  "data": {
+    "name": "Without image2d",
+    "description": "image test2",
+    "User":9
+  }
+}
+
+ */

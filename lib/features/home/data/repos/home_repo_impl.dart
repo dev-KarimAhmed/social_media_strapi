@@ -40,4 +40,19 @@ class HomeRepoImpl implements HomeRepo {
       return left(ServerError(e.toString()));
     }
   }
+  
+  @override
+  Future<Either<Failure, Map<String, dynamic>>> post({required String token, required Map<String, dynamic> apiData})async {
+    try {
+      var data = await apiServices.post('posts' , token , apiData);
+      // PostModel posts = PostModel.fromJson(data);
+
+      return right(data.extra);
+    } catch (e) {
+      if (e is DioException) {
+        return left(ServerError.fromDioError(e));
+      }
+      return left(ServerError(e.toString()));
+    }
+  }
 }
