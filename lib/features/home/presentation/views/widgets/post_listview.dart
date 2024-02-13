@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:social_media_app/features/authentication/presentation/view_model/auth_cubit/authentcation_cubit.dart';
 import 'package:social_media_app/features/home/presentation/view_model/home_cubit/home_cubit.dart';
 import 'package:social_media_app/features/home/presentation/view_model/home_cubit/home_state.dart';
 import 'package:social_media_app/features/home/presentation/views/widgets/post_item.dart';
@@ -28,6 +29,7 @@ class PostsListView extends StatelessWidget {
                     deleteFunction: () {
                       cubit.deletePost(
                         id: cubit.post!.data![index].id ?? 0,
+                        token: AuthentcationCubit.get(context).getToken()[0],
                       );
                       if (state is PostDeleteError) {
                         print(state.errMessage);

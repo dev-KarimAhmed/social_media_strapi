@@ -11,6 +11,7 @@ class ApiServices {
       final Response<dynamic> response = await dio.post(
         _baseUrl + endPoint,
         data: data,
+        
       );
 
       // You might want to handle errors or status codes here if needed
@@ -38,13 +39,17 @@ class ApiServices {
     }
   }
 
-  Future<Map<String, dynamic>> getPosts(String endPoint) async {
-    final Response<dynamic> response = await dio.get(_baseUrl + endPoint);
+  Future<Map<String, dynamic>> getPosts(String endPoint , String token) async {
+    final Response<dynamic> response = await dio.get(_baseUrl + endPoint , options: Options(
+      headers: {'Authorization': 'Bearer $token'},
+    ));
     return response.data;
   }
 
-  Future<Map<String, dynamic>> deletePost(String endPoint) async {
-    final Response<dynamic> response = await dio.delete(_baseUrl + endPoint);
+  Future<Map<String, dynamic>> deletePost(String endPoint , String token) async {
+    final Response<dynamic> response = await dio.delete(_baseUrl + endPoint , options: Options(
+      headers: {'Authorization': 'Bearer $token'},
+    ));
     return response.data;
   }
 }

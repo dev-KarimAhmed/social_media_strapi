@@ -70,10 +70,10 @@ class HomeCubit extends Cubit<HomeStates> {
   }
 
   PostModel? post;
-  Future<void> getPosts() async {
+  Future<void> getPosts({required String token}) async {
     emit(GetPostsLoading());
 
-    var result = await homeRepo.getPosts();
+    var result = await homeRepo.getPosts(token: token);
 
     result.fold((failure) => emit(GetPostesFailed(failure.errMessage)),
         (posts) {
@@ -82,11 +82,11 @@ class HomeCubit extends Cubit<HomeStates> {
     });
   }
 
-  Future<void> deletePost({required int id}) async {
+  Future<void> deletePost({required int id , required String token}) async {
     emit(PostDeleteLoading());
-    var result = await homeRepo.deletePost(id: id);
+    var result = await homeRepo.deletePost(id: id , token: token);
     result.fold((failure) => emit(PostDeleteError(failure.errMessage)), (r) {
-      getPosts().then((value) => emit(PostDeleteSuccess()));
+      getPosts(token: token).then((value) => emit(PostDeleteSuccess()));
     });
   }
 

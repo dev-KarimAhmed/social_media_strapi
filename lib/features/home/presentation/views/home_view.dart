@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_media_app/core/components/custom_appBar.dart';
 import 'package:social_media_app/core/utils/services_locator.dart';
+import 'package:social_media_app/features/authentication/presentation/view_model/auth_cubit/authentcation_cubit.dart';
 import 'package:social_media_app/features/home/data/repos/home_repo_impl.dart';
 import 'package:social_media_app/features/home/presentation/view_model/home_cubit/home_cubit.dart';
 import 'package:social_media_app/features/home/presentation/view_model/home_cubit/home_state.dart';
@@ -14,7 +15,8 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => HomeCubit(getIt.get<HomeRepoImpl>())..getPosts(),
+      create: (context) => HomeCubit(getIt.get<HomeRepoImpl>())
+        ..getPosts(token: AuthentcationCubit.get(context).getToken()[0]),
       child: BlocConsumer<HomeCubit, HomeStates>(
         listener: (context, state) {
           if (state is NewPost) {

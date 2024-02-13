@@ -11,9 +11,9 @@ class HomeRepoImpl implements HomeRepo {
   HomeRepoImpl(this.apiServices);
 
   @override
-  Future<Either<Failure, PostModel>> getPosts() async {
+  Future<Either<Failure, PostModel>> getPosts({required String token}) async {
     try {
-      var data = await apiServices.getPosts('posts?populate=*');
+      var data = await apiServices.getPosts('posts?populate=*' , token);
       PostModel posts = PostModel.fromJson(data);
 
       return right(posts);
@@ -27,9 +27,9 @@ class HomeRepoImpl implements HomeRepo {
 
   @override
   Future<Either<Failure, Map<String, dynamic>>> deletePost(
-      {required int id}) async {
+      {required int id , required String token}) async {
     try {
-      var data = await apiServices.deletePost('posts/$id');
+      var data = await apiServices.deletePost('posts/$id' ,token);
       // PostModel posts = PostModel.fromJson(data);
 
       return right(data);
