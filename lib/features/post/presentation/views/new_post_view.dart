@@ -1,10 +1,11 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_media_app/core/components/check_if_image_null_function.dart';
 import 'package:social_media_app/core/components/custom_actionBtn.dart';
 import 'package:social_media_app/core/components/custom_circleAvatr.dart';
-import 'package:social_media_app/core/utils/api_services.dart';
 import 'package:social_media_app/core/utils/services_locator.dart';
 import 'package:social_media_app/features/authentication/presentation/view_model/auth_cubit/authentcation_cubit.dart';
 import 'package:social_media_app/features/home/data/repos/home_repo_impl.dart';
@@ -58,17 +59,33 @@ class NewPostScreen extends StatelessWidget {
                     actions: [
                       CustomActionButton(
                         text: 'POST',
-                        onTap: () {
-                          HomeCubit.get(context).createPost(
-                            token: cubit.getToken()[0],
-                            apiData: {
-                              'data': {
-                                "name": "Without name , remove it from api",
-                                "description": postController.text,
-                                "User": cubit.getToken()[2],
-                              }
-                            },
+                        onTap: () async {
+                          var header = {
+                            'Authorization': 'Bearer ${cubit.getToken()[0]}'
+                          };
+                          Response responsee;
+                          Dio dio = Dio();
+                          responsee = await dio.post(
+                            'http://192.168.1.5:1337/api/posts',
+                            data: await addPostData(
+                              image: HomeCubit.get(context).postImage,
+                              description: postController.text,
+                              name: cubit.getToken()[1],
+                              user: cubit.getToken()[2].toString(),
+                            ),
+                            options: Options(headers: header),
                           );
+                          print('Response status: ${responsee.statusCode}');
+                          // HomeCubit.get(context).createPost(
+                          //   token: cubit.getToken()[0],
+                          //   apiData: {
+                          //     'data': {
+                          //       "name": "Without name , remove it from api",
+                          //       "description": postController.text,
+                          //       "User": cubit.getToken()[2],
+                          //     }
+                          //   },
+                          // );
                           // HomeCubit.get(context).postImage != null
                           //     ? HomeCubit.get(context).uploadPostImage(
                           //         token: cubit.getToken()[0],
@@ -186,4 +203,22 @@ class NewPostScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+Future<FormData> addPostData({
+  required File? image,
+  required String description,
+  required String name,
+  required String user,
+}) async {
+  var formData = FormData();
+  formData.fields.add(MapEntry("data",
+      '{"name" : "$name" , "description" : "$description" , "User" : "$user"}'));
+  if (image != null) {
+    formData.files.add(MapEntry(
+        "files.image",
+        await MultipartFile.fromFile(image.path,
+            filename: image.path.split('/').last)));
+  }
+  return formData;
 }
