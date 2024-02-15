@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 
 class ApiServices {
@@ -105,6 +107,75 @@ class ApiServices {
       rethrow;
     }
   }
+  Future<FormData> addPostData({
+  required File? image,
+  required String description,
+  required String name,
+  required String user,
+}) async {
+  var formData = FormData();
+  formData.fields.add(MapEntry("data",
+      '{"name" : "$name" , "description" : "$description" , "User" : "$user"}'));
+  if (image != null) {
+    formData.files.add(MapEntry(
+        "files.image",
+        await MultipartFile.fromFile(image.path,
+            filename: image.path.split('/').last)));
+  }
+  return formData;
+}
+Future<Response> addPost({
+  required String token,
+  required String name,
+  required String description,
+  required String user,
+  required File? image,
+  required String endPoint,
+}) async{
+   try {
+    var formData = FormData();
+  formData.fields.add(MapEntry("data",
+      '{"name" : "$name" , "description" : "$description" , "User" : "$user"}'));
+  if (image != null) {
+    formData.files.add(MapEntry(
+        "files.image",
+        await MultipartFile.fromFile(image.path,
+            filename: image.path.split('/').last)));
+  }
+  // return formData;
+      final Response<dynamic> response = await dio.post(_baseUrl + endPoint,
+          data: formData,
+          options: Options(
+            headers: {'Authorization': 'Bearer $token'},
+          )
+          // You can also add other options like headers if needed
+          );
+
+      // You might want to handle errors or status codes here if needed
+
+      return response;
+    } catch (e) {
+      // Handle exceptions or errors here, if necessary
+      rethrow;
+    }
+  //  var header = {
+  //                           'Authorization': 'Bearer ${cubit.getToken()[0]}'
+  //                         };
+  //                         Response responsee;
+  //                         Dio dio = Dio();
+  //                         responsee = await dio.post(
+  //                           'http://192.168.1.5:1337/api/posts',
+  //                           data: await addPostData(
+  //                             image: HomeCubit.get(context).postImage,
+  //                             description: postController.text,
+  //                             name: cubit.getToken()[1],
+  //                             user: cubit.getToken()[2].toString(),
+  //                           ),
+  //                           options: Options(headers: header),
+  //                         );
+  //                         return responsee;
+
+}
 }
 
 /**

@@ -21,23 +21,21 @@ class NewPostScreen extends StatelessWidget {
       create: (context) => HomeCubit(getIt.get<HomeRepoImpl>()),
       child: BlocConsumer<HomeCubit, HomeStates>(
         listener: (context, state) {
-          AuthentcationCubit cubit = AuthentcationCubit.get(context);
 
-          if (state is PostedSuccess) {
+          if (state is AddPostSuccess) {
             postController.clear();
-            print(HomeCubit.get(context).postPostModel?.data?.id);
-            Navigator.pop(context);
+            HomeCubit.get(context).removePostImage();
+            postController.clear();
+            back(context);
           }
-          if (state is PostedError) {
+          if (state is AddPostError) {
             print(state.errMessage);
           }
-          if (state is PostImageUploadError) {
-            print("IMAGE==================>" + state.errMessage);
-          }
+          
         },
         builder: (context, state) {
           AuthentcationCubit cubit = AuthentcationCubit.get(context);
-          return state is PostedLoading
+          return state is AddPostLoading
               ? const Center(
                   child: CircularProgressIndicator(),
                 )
@@ -59,23 +57,30 @@ class NewPostScreen extends StatelessWidget {
                     actions: [
                       CustomActionButton(
                         text: 'POST',
-                        onTap: () async {
-                          var header = {
-                            'Authorization': 'Bearer ${cubit.getToken()[0]}'
-                          };
-                          Response responsee;
-                          Dio dio = Dio();
-                          responsee = await dio.post(
-                            'http://192.168.1.5:1337/api/posts',
-                            data: await addPostData(
-                              image: HomeCubit.get(context).postImage,
-                              description: postController.text,
-                              name: cubit.getToken()[1],
-                              user: cubit.getToken()[2].toString(),
-                            ),
-                            options: Options(headers: header),
+                        onTap: () {
+                          HomeCubit.get(context).addPost(
+                            token: cubit.getToken()[0],
+                            name: cubit.getToken()[1],
+                            description: postController.text,
+                            user: cubit.getToken()[2].toString(),
+                            image: HomeCubit.get(context).postImage,
                           );
-                          print('Response status: ${responsee.statusCode}');
+                          // var header = {
+                          //   'Authorization': 'Bearer ${cubit.getToken()[0]}'
+                          // };
+                          // Response responsee;
+                          // Dio dio = Dio();
+                          // responsee = await dio.post(
+                          //   'http://192.168.1.5:1337/api/posts',
+                          //   data: await addPostData(
+                          //     image: HomeCubit.get(context).postImage,
+                          //     description: postController.text,
+                          //     name: cubit.getToken()[1],
+                          //     user: cubit.getToken()[2].toString(),
+                          //   ),
+                          //   options: Options(headers: header),
+                          // );
+                          // print('Response data: ${responsee.data}');
                           // HomeCubit.get(context).createPost(
                           //   token: cubit.getToken()[0],
                           //   apiData: {
@@ -203,6 +208,8 @@ class NewPostScreen extends StatelessWidget {
       ),
     );
   }
+
+  void back(BuildContext context) => Navigator.pop(context);
 }
 
 Future<FormData> addPostData({

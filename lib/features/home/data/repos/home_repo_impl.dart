@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:social_media_app/core/errors/dio_error.dart';
@@ -61,13 +63,41 @@ class HomeRepoImpl implements HomeRepo {
   }
 
   @override
-  Future<Either<Failure, PostImage>> uploadImageToPost({required String token, required Map<String, dynamic> apiImagePostData}) async{
-   try {
-      var data = await apiServices.uploadImageToPost('upload', token, apiImagePostData);
-      PostImage postImage =
-          PostImage.fromJson(data as Map<String, dynamic>);
+  Future<Either<Failure, PostImage>> uploadImageToPost(
+      {required String token,
+      required Map<String, dynamic> apiImagePostData}) async {
+    try {
+      var data = await apiServices.uploadImageToPost(
+          'upload', token, apiImagePostData);
+      PostImage postImage = PostImage.fromJson(data as Map<String, dynamic>);
 
       return right(postImage);
+    } catch (e) {
+      if (e is DioException) {
+        return left(ServerError.fromDioError(e));
+      }
+      return left(ServerError(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Map<String, dynamic>>> addPost(
+      {required String token,
+      required String name,
+      required String description,
+      required String user,
+      required File? image}) async {
+    try {
+      var data = await apiServices.addPost(
+        endPoint: 'posts',
+        token: token,
+        name: name,
+        description: description,
+        user: user,
+        image: image,
+      );
+
+      return right(data.data);
     } catch (e) {
       if (e is DioException) {
         return left(ServerError.fromDioError(e));

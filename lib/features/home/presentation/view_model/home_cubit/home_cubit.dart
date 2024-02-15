@@ -106,6 +106,25 @@ class HomeCubit extends Cubit<HomeStates> {
     });
   }
 
+  Future<void> addPost({
+    required String token,
+    required String name,
+    required String description,
+    required String user,
+    required File? image,
+  }) async {
+    emit(AddPostLoading());
+    var result = await homeRepo.addPost(
+        name: name, description: description, user: user, image: image, 
+        token: token,
+        );
+    result.fold((failure) => emit(AddPostError(errMessage: failure.errMessage)),
+        (postpostModel) {
+      getPosts(token: token).then((value) => emit(AddPostSuccess()));
+      
+    });
+  }
+
   PostImage? postImageModel;
 
   Future<void> uploadPostImage({

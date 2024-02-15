@@ -155,5 +155,14 @@ class PostImageUploadError extends HomeStates {
   PostImageUploadError({
     required this.errMessage,
   });
-  
+
 }
+  
+ class AddPostSuccess extends HomeStates {} 
+class AddPostError extends HomeStates {
+   String errMessage;
+  AddPostError({
+    required this.errMessage,
+  });
+ }
+ class AddPostLoading extends HomeStates {}
