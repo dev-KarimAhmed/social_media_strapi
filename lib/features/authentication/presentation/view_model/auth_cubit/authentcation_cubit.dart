@@ -1,6 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:social_media_app/features/authentication/data/repos/auth_repo.dart';
 import 'package:social_media_app/features/authentication/presentation/view_model/auth_cubit/authentcation_state.dart';
 import 'package:social_media_app/main.dart';
@@ -59,6 +60,27 @@ class AuthentcationCubit extends Cubit<AuthentcationState> {
       print(e);
     }
   }
+
+Future<GoogleSignInAccount?> signInWithGoogle() async {
+  emit(AuthentcationLoading());
+
+  try {
+    final googleSignIn = GoogleSignIn();
+    final googleUser = await googleSignIn.signIn();
+
+    if (googleUser != null) {
+      emit(AuthenticationWithGoogleSuccess(googleUser));
+    } else {
+      emit(AuthenticationWithGoogleError("Google sign-in failed"));
+    }
+
+    return googleUser;
+  } catch (e) {
+    emit(AuthenticationWithGoogleError(e.toString()));
+    return null;
+  }
+}
+
 
   Future<void> login({
     required String identifier,

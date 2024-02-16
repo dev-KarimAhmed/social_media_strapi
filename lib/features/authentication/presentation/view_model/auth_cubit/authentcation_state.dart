@@ -1,3 +1,4 @@
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:social_media_app/features/authentication/data/models/register/register.dart';
 
 abstract class AuthentcationState {}
@@ -33,3 +34,15 @@ class LoginLoading extends AuthentcationState {}
 class TokenSavedSuccess extends AuthentcationState {}
 
 class SignedOutSuccess extends AuthentcationState {}
+
+class AuthenticationWithGoogleSuccess extends AuthentcationState {
+  final GoogleSignInAccount? googleUser;
+
+  AuthenticationWithGoogleSuccess(this.googleUser);
+}
+
+class AuthenticationWithGoogleError extends AuthentcationState {
+  final String errMessage;
+
+  AuthenticationWithGoogleError(this.errMessage);
+}

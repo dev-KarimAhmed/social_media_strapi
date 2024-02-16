@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:social_media_app/core/google_sign_up.dart';
 import 'package:social_media_app/core/navigationfunctions.dart';
 import 'package:social_media_app/features/authentication/presentation/view_model/auth_cubit/authentcation_cubit.dart';
 import 'package:social_media_app/features/authentication/presentation/view_model/auth_cubit/authentcation_state.dart';
@@ -20,6 +21,15 @@ class LoginView extends StatelessWidget {
     return BlocConsumer<AuthentcationCubit, AuthentcationState>(
       listener: (context, state) async {
         AuthentcationCubit cubit = AuthentcationCubit.get(context);
+        // if (state is AuthenticationWithGoogleSuccess) {
+        //   // print('======================> ${state.authModel.user?.username}');
+        //   cubit
+        //       .saveToken(
+        //           state.googleUser?.id ?? '',
+        //           state.googleUser?.displayName ?? '',
+        //           int.tryParse(state.googleUser!.id) ?? 0)
+        //       .then((value) => navigateWithoutBack(context, const HomeView()));
+        // }
         if (state is AuthentcationSuccess) {
           print('======================> ${state.authModel.user?.username}');
           cubit
@@ -129,6 +139,29 @@ class LoginView extends StatelessWidget {
                               const SizedBox(
                                 height: 30,
                               ),
+                              // GestureDetector(
+                              //   onTap: () {
+                              //     cubit.signInWithGoogle();
+                              //   },
+                              //   child: Container(
+                              //     padding: const EdgeInsets.all(16),
+                              //     alignment: Alignment.center,
+                              //     decoration: BoxDecoration(
+                              //       borderRadius: BorderRadius.circular(8),
+                              //       color: Colors.blue,
+                              //     ),
+                              //     child: const Text(
+                              //       'Login with google',
+                              //       style: TextStyle(
+                              //         color: Colors.white,
+                              //         fontSize: 22,
+                              //       ),
+                              //     ),
+                              //   ),
+                              // ),
+                              // const SizedBox(
+                              //   height: 30,
+                              // ),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,

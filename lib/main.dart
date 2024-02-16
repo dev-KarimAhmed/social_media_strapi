@@ -33,7 +33,7 @@ class SocialMediaApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: c.getToken() == '' ? LoginView() : const HomeView(),
+      home: c.getToken()[0] == '' ? LoginView() : const HomeView(),
     );
   }
 }
